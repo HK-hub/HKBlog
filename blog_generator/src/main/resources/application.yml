@@ -1,0 +1,48 @@
+#服务配置
+server:
+  port: 8081
+  address: localhost
+  servlet:
+    context-path: /generator
+
+
+#spring配置
+spring:
+  #1.应用配置
+  application:
+    name: blog-generator #指定服务名
+  #2.数据库连接池
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hk_blog?useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+  # spring cloud 服务配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848  #nacos服务ip
+
+  # redis 服务配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: root
+    timeout: 3000
+  #3.JPA
+#  jpa:
+#    database: MySQL
+#    show-sql: true
+#    open-in-view: true
+
+# redis 服务配置
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: root
+#    timeout: 3000
+#jwt:
+#  config:
+#    salt: ihrm_system
+#    expireTime: 10800000 # 3小时失效

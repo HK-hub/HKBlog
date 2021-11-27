@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hkblog.business.mapper.PostMapper">
+
+    <resultMap id="BaseResultMap" type="com.hkblog.domain.entity.Post">
+            <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+            <result property="coverUrl" column="cover_url" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="viewNum" column="view_num" jdbcType="INTEGER"/>
+            <result property="likeNum" column="like_num" jdbcType="INTEGER"/>
+            <result property="collectionNum" column="collection_num" jdbcType="INTEGER"/>
+            <result property="commentNum" column="comment_num" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        post_id,cover_url,title,
+        description,content,view_num,
+        like_num,collection_num,comment_num,
+        status,create_time,update_time,
+        deleted
+    </sql>
+
+    <!--根据 tag 标签查询分页 -->
+    <select id="selectByTagId" resultType="com.hkblog.domain.entity.Post">
+        select
+            p.*
+        from
+            tb_post as p
+        where  p.post_id in (
+                select pt.post_id
+                from tb_post_tag as pt
+                where pt.tag_id=#{tagId}
+            )
+        limit #{page},#{size}
+    </select>
+
+
+    <!-- 博客文章归档 -->
+    <select id="selectArchiveList" resultType="com.hkblog.domain.vo.PostArchiveVo">
+        select
+            year(create_time) as year ,
+            month(create_time) as month,
+            count(*) as count
+        from
+            tb_post as p
+        group by year , month;
+    </select>
+
+
+</mapper>
+

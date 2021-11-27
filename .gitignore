@@ -1,0 +1,6 @@
+# Project exclude paths
+/blog_business/target/
+/blog_common/target/
+/blog_gateway/target/
+/blog_generator/target/
+/blog_model/target/

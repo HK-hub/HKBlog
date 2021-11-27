@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hkblog.business.mapper.TagMapper">
+
+    <resultMap id="BaseResultMap" type="com.hkblog.domain.entity.Tag">
+            <id property="tagId" column="tag_id" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        tag_id,name,description,
+        create_time,update_time,deleted
+    </sql>
+    <!-- 查询文章所有标签 -->
+    <select id="selectPostTags" resultType="com.hkblog.domain.entity.Tag">
+        select t.*
+        from tb_tag as t
+                 inner join tb_post_tag as pt on pt.post_id = #{postId};
+    </select>
+
+
+
+    <!-- 查询热门标签 -->
+    <select id="findHotsTag" resultType="java.lang.String">
+        select
+            tag_id
+        from
+            tb_post_tag as pt
+
+        group by tag_id
+        order by count(*)
+        limit #{num};
+    </select>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hkblog.business.mapper.VisitLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.hkblog.domain.entity.VisitLog">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="touristsId" column="tourists_id" jdbcType="VARCHAR"/>
+            <result property="uri" column="uri" jdbcType="VARCHAR"/>
+            <result property="method" column="method" jdbcType="VARCHAR"/>
+            <result property="param" column="param" jdbcType="VARCHAR"/>
+            <result property="behavior" column="behavior" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="ip" column="ip" jdbcType="VARCHAR"/>
+            <result property="ipSource" column="ip_source" jdbcType="VARCHAR"/>
+            <result property="os" column="os" jdbcType="VARCHAR"/>
+            <result property="browser" column="browser" jdbcType="VARCHAR"/>
+            <result property="times" column="times" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="userAgent" column="user_agent" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="BOOLEAN"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,tourists_id,uri,
+        method,param,behavior,
+        content,remark,ip,
+        ip_source,os,browser,
+        times,create_time,user_agent,
+        deleted,update_time
+    </sql>
+</mapper>
