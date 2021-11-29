@@ -8,6 +8,7 @@ import lombok.Data;
 
 /**
  * 用户评论表
+ * @author HK意境
  * @TableName tb_comment
  */
 @TableName(value ="tb_comment")
@@ -20,16 +21,36 @@ public class Comment implements Serializable {
     private String commentId;
 
     /**
+     * 文章作者
+     */
+    @TableField(value = "author_id")
+    private String authorId ;
+
+    /**
      * 评论发起者用户ID
      */
     @TableField(value = "from_user_id")
     private String fromUserId;
+
+    private String toUserId;
 
     /**
      * 博客文章作品ID
      */
     @TableField(value = "post_id")
     private String postId;
+
+    /*
+     * 父评论 id
+     *      "000" 为没有父评论
+     */
+    @TableField(value = "parent_id")
+    private String parentId ;
+
+    /**
+     * 评论等级 :
+      */
+    private Integer level ;
 
     /**
      * 评论内容

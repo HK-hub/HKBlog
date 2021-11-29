@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/blog_authentication/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/blog_authentication/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog_business/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog_business/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog_common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/blog_gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog_generator/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/blog_model/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../blog_geteway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../blog_geteway/src/main/resources" charset="UTF-8" />
   </component>
 </project>

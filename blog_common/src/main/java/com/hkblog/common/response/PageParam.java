@@ -27,4 +27,16 @@ public class PageParam {
     //每页数量
     private Integer pageSize = 10;
 
+    private String categoryId ;
+
+    private String tagId ;
+
+
+    public PageParam(int page, int size){
+
+        this.page = page;
+        this.pageSize = size ;
+
+    }
+
 }

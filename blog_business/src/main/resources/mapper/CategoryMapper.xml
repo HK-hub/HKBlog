@@ -17,4 +17,15 @@
         id,name,description,
         deleted,create_time,update_time
     </sql>
+
+
+    <!-- 根据文章 id 查询文章全部标签 -->
+    <select id="selectListByPostId" resultType="com.hkblog.domain.entity.Category">
+        select
+            c.*
+        from tb_category as c
+                 inner join tb_post_category as pc on pc.category_id = c.id
+        where post_id = #{postId};
+
+    </select>
 </mapper>

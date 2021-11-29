@@ -17,7 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 // 开启服务调用功能
 @EnableFeignClients
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.hkblog")
 // 开启服务发现功能
 @EnableDiscoveryClient
 public class BusinessApplication {

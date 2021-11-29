@@ -1,8 +1,10 @@
 package com.hkblog.business.service;
 
 import com.hkblog.common.response.PageParam;
+import com.hkblog.common.response.PostParam;
 import com.hkblog.domain.entity.Post;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.hkblog.domain.entity.User;
 import com.hkblog.domain.vo.PostArchiveVo;
 import com.hkblog.domain.vo.PostVo;
 import org.springframework.lang.Nullable;
@@ -42,4 +44,26 @@ public interface PostService extends IService<Post> {
 
     // 返回文章按照年月份进行归档
     List<PostArchiveVo> listArchives();
+
+
+    // 查询文章详情，标签，分类，作者，内容，标题等等
+    PostVo getPostDetailVoById(String id);
+
+
+
+    // 通过文章id 获取作者信息
+    User getPostAuthorById(String postId);
+
+
+
+    // 更新文章的评论数量
+    Boolean updatePostCommentNum(String postId);
+
+    // 发布新文章
+    Post saveNewPost(PostParam postParam,String userId);
+
+
+
+    // 根据分类id 查找全部文章
+    List<PostVo> findAllPostByCategory(String categoryId);
 }

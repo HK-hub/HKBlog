@@ -25,6 +25,9 @@ public class Category implements Serializable {
     @TableField(value = "name")
     private String name;
 
+    // 分类图标
+    private String avatar ;
+
     /**
      * 文章分类详情描述
      */

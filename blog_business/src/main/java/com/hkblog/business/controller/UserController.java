@@ -3,12 +3,15 @@ package com.hkblog.business.controller;
 import com.hkblog.business.service.impl.UserServiceImpl;
 import com.hkblog.common.response.ResponseResult;
 import com.hkblog.common.response.ResultCode;
+import com.hkblog.common.utils.IdWorker;
 import com.hkblog.domain.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.swing.text.Style;
 import java.sql.ResultSet;
 
@@ -30,7 +33,8 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-
+    @Autowired
+    private IdWorker idWorker ;
 
     /**
      * @methodName : 保存用户
@@ -49,6 +53,8 @@ public class UserController {
     @PostMapping()
     public ResponseResult save(@RequestBody User user){
 
+        // 加密密码, 分配ID
+        user.setUserId(idWorker.nextId()+"");
         userService.save(user);
         return new ResponseResult(ResultCode.SUCCESS, user) ;
     }
@@ -150,6 +156,38 @@ public class UserController {
 
         return new ResponseResult(ResultCode.SUCCESS);
     }
+
+
+    /**
+     * @methodName : 获取用户信息 ，通过 token 获取信息
+     * @author : HK意境
+     * @date : 2021/11/27 13:24
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @GetMapping("/info")
+    public ResponseResult getUserInfo(@RequestHeader("Authorization")String authorization){
+
+        // 获取请求头中的 token 信息, 或者使用注解 @RequestHeader()
+        //String authorization = request.getHeader("Authorization");
+
+        // 获取userId ，查询用户
+        User user = userService.findUserByToken(authorization);
+        if (user == null){
+            // token 为空，token 不合法，token 过期
+            return new ResponseResult(ResultCode.TOKEN_ERROR , "用户未登录或登录过期,请重新登录");
+        }
+
+        return new ResponseResult(ResultCode.SUCCESS,user);
+    }
+
 
 
 }

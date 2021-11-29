@@ -21,7 +21,8 @@
     <select id="selectPostTags" resultType="com.hkblog.domain.entity.Tag">
         select t.*
         from tb_tag as t
-                 inner join tb_post_tag as pt on pt.post_id = #{postId};
+                 inner join tb_post_tag as pt on pt.tag_id = t.tag_id
+        where post_id = #{postId};
     </select>
 
 
@@ -36,6 +37,15 @@
         group by tag_id
         order by count(*)
         limit #{num};
+    </select>
+
+
+    <!-- 查询文章的全部标签列表 -->
+    <select id="selectListByPostId" resultType="com.hkblog.domain.entity.Tag">
+        select t.*
+        from tb_tag as t
+                 inner join tb_post_tag as pt on pt.tag_id = t.tag_id
+        where post_id = #{postId};
     </select>
 
 </mapper>

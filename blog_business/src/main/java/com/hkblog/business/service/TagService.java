@@ -46,4 +46,21 @@ public interface TagService extends IService<Tag> {
      * @Version : 1.0
      */
     List<Tag> hotsTag(@Nullable Integer num);
+
+
+    /**
+     * @methodName : 根据文章ID 查询全部标签
+     * @author : HK意境
+     * @date : 2021/11/27 20:47
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    List<Tag> findTagListByPostId(String postId);
 }

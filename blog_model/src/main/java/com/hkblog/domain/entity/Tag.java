@@ -31,6 +31,8 @@ public class Tag implements Serializable {
     @TableField(value = "description")
     private String description;
 
+    private String avatar ;
+
     /**
      * 文章标签创建时间
      */

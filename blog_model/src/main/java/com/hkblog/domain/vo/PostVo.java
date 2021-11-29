@@ -1,5 +1,6 @@
 package com.hkblog.domain.vo;
 
+import com.hkblog.domain.entity.Category;
 import com.hkblog.domain.entity.Post;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -21,9 +22,9 @@ import java.util.List;
 public class PostVo extends Post {
 
     private String author;
-    private String avatarUrl ;
+    private String avatarUrl;
     private List<TagVo> tagList ;
-    private List<CategoryVo> category ;
+    private List<Category> categoryList ;
 
     // 去除 targlist 标签集合
     public void removeTag(){
@@ -32,7 +33,7 @@ public class PostVo extends Post {
 
     // 去除分类集合
     public void removeCategory(){
-        this.category.clear();
+        this.categoryList.clear();
     }
 
     // 去除作者信息

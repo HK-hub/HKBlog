@@ -55,5 +55,18 @@
     </select>
 
 
+    <!-- 通过文章分类信息查询全部博客文章 -->
+    <select id="selectListByCategory" resultType="com.hkblog.domain.entity.Post">
+        -- 根据分类id，查询全部文章信息
+        select
+            p.*
+        from
+            tb_post as p
+                inner join tb_post_category as pc on pc.post_id = p.post_id
+        where
+            pc.category_id = #{categoryId};
+    </select>
+
+
 </mapper>
 

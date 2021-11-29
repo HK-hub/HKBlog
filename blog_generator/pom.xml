@@ -19,31 +19,18 @@
     <dependencies>
         <dependency>
             <groupId>com.diboot</groupId>
-            <artifactId>diboot-iam-spring-boot-starter</artifactId>
+            <artifactId>diboot-core-spring-boot-starter</artifactId>
             <version>2.3.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.diboot</groupId>
-            <artifactId>diboot-file-spring-boot-starter</artifactId>
+            <artifactId>diboot-devtools-spring-boot-starter</artifactId>
             <version>2.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.diboot</groupId>
-            <artifactId>diboot-message-spring-boot-starter</artifactId>
-            <version>2.3.1</version>
-        </dependency>
-
-        <!--open Feign -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <scope>provided</scope><!-- 打war包时剔除，注: 某些IDEA版本存在provided的支持问题，可通过需要生成时手动启用，打包或不需要时注释掉的方式剔除devtools依赖 -->
         </dependency>
 
 
 
     </dependencies>
-
 
 </project>

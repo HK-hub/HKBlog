@@ -1,0 +1,70 @@
+#服务配置
+server:
+  port: 8083
+  address: localhost
+  servlet:
+    context-path:
+#spring配置
+spring:
+  #1.应用配置
+  application:
+    name: blog-authentication #指定服务名
+  #2.数据库连接池
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hk_blog?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# spring cloud 服务配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848  #nacos服务ip
+      config:
+        server-addr: 127.0.0.1:8848
+
+
+
+
+# beetlsql
+#beetlsql:
+#  sqlPath: /sql
+#  basePackage: com.hkblog.business.mapper
+#  #mapper接口的后缀
+#  daoSuffix: Mapper
+#  #是否向控制台输出执行的sql，默认为true
+#beetl-beetlsql:
+#  dev: true
+
+
+
+# mybatis-plus
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: flag  # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: root
+#    timeout: 3000
+#jwt:
+#  config:
+#    salt: ihrm_system
+#    expireTime: 10800000 # 3小时失效
+
+
+
+
+jwt:
+  config:
+    salt: HK-Blog
+    expireTime: 10800000 # 3小时失效

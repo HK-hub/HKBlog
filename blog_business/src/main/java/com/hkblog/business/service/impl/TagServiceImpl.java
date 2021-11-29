@@ -80,6 +80,27 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
 
+    /**
+     * @methodName : 查询博客文章的全部标签信息
+     * @author : HK意境
+     * @date : 2021/11/27 20:47
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @Override
+    public List<Tag> findTagListByPostId(String postId) {
+        List<Tag> tagList = tagMapper.selectListByPostId(postId);
+        return tagList;
+    }
+
+
 }
 
 

@@ -19,4 +19,11 @@
         content,deleted,create_time,
         update_time
     </sql>
+
+    <!-- 根据博客文章ID查询全部文章评论 -->
+    <select id="selectCommentsByPostId" resultType="com.hkblog.domain.entity.Comment"></select>
+
+
+
+
 </mapper>

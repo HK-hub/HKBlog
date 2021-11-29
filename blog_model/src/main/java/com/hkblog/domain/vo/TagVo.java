@@ -22,6 +22,7 @@ public class TagVo {
     private String id ;
     private String name ;
     private String desc ;
+    private String avatar ;
 
     /**
      *
@@ -32,6 +33,7 @@ public class TagVo {
         this.id = su.getTagId() ;
         this.name = su.getName() ;
         this.desc = su.getDescription() ;
+        this.avatar = su.getAvatar() ;
 
     }
 

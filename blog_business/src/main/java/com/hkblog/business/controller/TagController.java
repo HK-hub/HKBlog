@@ -5,6 +5,7 @@ import com.hkblog.common.response.ResponseResult;
 import com.hkblog.common.response.ResultCode;
 import com.hkblog.common.utils.IdWorker;
 import com.hkblog.domain.entity.Tag;
+import com.hkblog.domain.vo.TagVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.lang.Nullable;
@@ -46,6 +47,12 @@ public class TagController {
 
     }
 
+    @GetMapping("/all")
+    public ResponseResult<List<Tag>> all(){
+
+        List<Tag> list = tagService.list(null);
+        return new ResponseResult<>(ResultCode.SUCCESS ,list);
+    }
 
 
     /**
@@ -67,6 +74,54 @@ public class TagController {
 
         List<Tag> tags = tagService.hotsTag(num);
         return new ResponseResult(ResultCode.SUCCESS,tags);
+    }
+
+
+
+    /**
+     * @methodName : 获取全部标签Vo 对象
+     * @author : HK意境
+     * @date : 2021/11/28 21:14
+     * @description :
+     * @Todo : 获取全部的标签TagVo
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @GetMapping("/all/vo")
+    public ResponseResult findAllTagVos(){
+
+        List<TagVo> tagVos = tagService.selectByTags(tagService.list());
+
+        return new ResponseResult(ResultCode.SUCCESS, tagVos);
+    }
+
+
+
+    /**
+     * @methodName : 查询全部标签的详细信息
+     * @author : HK意境
+     * @date : 2021/11/29 17:00
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @GetMapping("/all/detail")
+    public ResponseResult findAllTagDetail(){
+
+        List<TagVo> tagVos = tagService.selectByTags(tagService.list());
+
+        return new ResponseResult(ResultCode.SUCCESS, tagVos);
     }
 
 
