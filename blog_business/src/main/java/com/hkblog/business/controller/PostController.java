@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hkblog.business.service.impl.*;
+import com.hkblog.common.cache.Cache;
 import com.hkblog.common.exception.CommonException;
 import com.hkblog.common.log.Log4j;
 import com.hkblog.common.response.PageParam;
@@ -169,6 +170,7 @@ public class PostController {
      */
     @Log4j(module = "博客文章", operation = "查询前端用户界面首页文章列表")
     @PostMapping("/pages")
+    @Cache(expire = 5 * 60 * 1000, name = "list_post")
     public ResponseResult listPost(@RequestBody PageParam pageParam) throws ParseException {
 
         // 查询分页博客文章
@@ -341,16 +343,19 @@ public class PostController {
      */
     @Log4j(module = "博客文章", operation = "查询前端用户界面首页侧边栏最热文章")
     @GetMapping("/hot")
-    public ResponseResult hotPosts(@RequestParam(name = "num", required = false ,defaultValue = "10")Integer num,
-                                   @RequestParam(required = false) Map orderCondition){
+    @Cache(expire = 5 * 60 * 1000, name = "hot_post")
+    public ResponseResult hotPosts(@RequestParam(name = "num", required = false ,defaultValue = "10")Integer num
+                                  /* @RequestParam(required = false) Map orderCondition*/){
 
         if (num == null){
             num = 10 ;
         }
         // 处理 Map 排序条件
-        if (orderCondition != null || orderCondition.isEmpty()) {
+        Map<String, String> orderCondition = new HashMap();
+        /*if (orderCondition != null || orderCondition.isEmpty()) {
             orderCondition.put("1","viewNum");
-        }
+        }*/
+        orderCondition.put("1","viewNum");
 
         List<Post> hotPostList = postService.getHotPosts(num, orderCondition) ;
         List<PostVo> voHotList = postService.castPostToPostVoBatch(hotPostList, false, false, false);
@@ -376,16 +381,19 @@ public class PostController {
      * @Version : 1.0
      */
     @GetMapping("/new")
-    public ResponseResult newPosts(@RequestParam(name = "num", required = false ,defaultValue = "5")Integer num,
-                                   @RequestParam(required = false) Map orderCondition){
+    @Cache(expire = 5 * 60 * 1000, name = "new_post")
+    public ResponseResult newPosts(@RequestParam(name = "num", required = false ,defaultValue = "5")Integer num
+                                   /*@RequestParam(required = false) Map orderCondition*/){
 
         if (num == null){
             num = 10 ;
         }
         // 处理 Map 排序条件
-        if (orderCondition != null || orderCondition.isEmpty()) {
+        /*if (orderCondition == null || orderCondition.isEmpty()) {
             orderCondition.put("1","updateTime");
-        }
+        }*/
+        Map<String, String> orderCondition = new HashMap();
+        orderCondition.put("1","updateTime");
 
         List<Post> hotPostList = postService.getNewPosts(num, orderCondition) ;
         List<PostVo> voHotList = postService.castPostToPostVoBatch(hotPostList, false, false, false);
