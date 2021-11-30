@@ -1,5 +1,6 @@
 package com.hkblog.business.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,23 +11,29 @@ import com.hkblog.common.response.PageParam;
 import com.hkblog.common.response.PostParam;
 import com.hkblog.common.response.ResponseResult;
 import com.hkblog.common.response.ResultCode;
+import com.hkblog.common.utils.DatetimeUtils;
 import com.hkblog.common.utils.IdWorker;
 import com.hkblog.common.utils.JwtUtils;
 import com.hkblog.domain.entity.Category;
 import com.hkblog.domain.entity.Post;
+import com.hkblog.domain.entity.PostCategory;
+import com.hkblog.domain.entity.PostTag;
 import com.hkblog.domain.vo.PostArchiveVo;
 import com.hkblog.domain.vo.PostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * @author : HK意境
@@ -162,48 +169,107 @@ public class PostController {
      */
     @Log4j(module = "博客文章", operation = "查询前端用户界面首页文章列表")
     @PostMapping("/pages")
-    public ResponseResult listPost(@RequestBody PageParam pageParam){
+    public ResponseResult listPost(@RequestBody PageParam pageParam) throws ParseException {
 
         // 查询分页博客文章
         List<PostVo> voList = postService.listPost(pageParam);
+
 
         // 去除不需要的分类文章，不需要的分类标签
         if (!StringUtils.isEmpty(pageParam.getCategoryId())){
             voList = this.selectListByCategory(pageParam.getCategoryId(), voList);
         }
-        //new PageResult<>()
-        /*System.out.println("=============================================================");
-        for (PostVo postVo : voList) {
-            System.out.println(postVo.getCategoryList().size());
-        }*/
+
+        // 添加标签条件查询
+        if (!StringUtils.isEmpty(pageParam.getTagId())){
+            voList = this.selectListByTag(pageParam.getTagId(), voList);
+        }
+
+        // 添加年份月份
+        if (!StringUtils.isEmpty(pageParam.getYear()) && !StringUtils.isEmpty(pageParam.getMonth())){
+            // 年月份归档不为空
+            voList = this.selectListByYearMonth(pageParam,voList);
+        }
+
         return new ResponseResult<>(ResultCode.SUCCESS,voList);
     }
 
+
+
+    // 查询符合年月月分的文章列表，归档查询
+    private List<PostVo> selectListByYearMonth(PageParam pageParam, List<PostVo> voList) throws ParseException {
+
+        // 需要转换文章创建年月份
+        //DateTimeFormatter.
+        ArrayList<PostVo> byYM = new ArrayList<>();
+        if (!StringUtils.isEmpty(pageParam.getYear()) && !StringUtils.isEmpty(pageParam.getMonth())){
+            // 年月份归档不为空
+            for (PostVo postVo : voList) {
+
+                if (!StringUtils.isEmpty(postVo.getCreateTime().toString())){
+                    // 创建时间不为空, 获取年月份
+                    int createYear = DatetimeUtils.getDataFromDate(postVo.getCreateTime(), Calendar.YEAR);
+                    int createMonth = DatetimeUtils.getDataFromDate(postVo.getCreateTime(), Calendar.MONTH) + 1;
+
+                    if (pageParam.getYear().equals(""+createYear) && pageParam.getMonth().equals(""+createMonth)){
+                        byYM.add(postVo);
+                    }
+                }
+
+            }
+
+        }
+        return byYM ;
+    }
+
+
+    // 过滤不需要的标签文章，查询符合标签的文章
+    private List<PostVo> selectListByTag(String tagId, List<PostVo> voList) {
+
+        List<PostVo> postByCT = new ArrayList<PostVo>();
+        if (!StringUtils.isEmpty(tagId)){
+
+            List<PostTag> postTagList = postTagService.list(new LambdaQueryWrapper<PostTag>().eq(PostTag::getTagId, tagId));
+
+            ArrayList<String> postIdList = new ArrayList<>();
+
+            for (PostTag postTag : postTagList) {
+                postIdList.add(postTag.getPostId());
+            }
+
+            // 存在文章标签筛选条件
+            for (PostVo postVo : voList) {
+
+                if (postIdList.contains(postVo.getPostId())){
+                    // 包含文章
+                    postByCT.add(postVo);
+                }
+            }
+        }
+        return postByCT ;
+    }
+
+
+    // 过滤调所有不符合分类信息的文章，查询符合分类的文章
     public List<PostVo> selectListByCategory(String categoryId,List<PostVo> voList){
 
         List<PostVo> postByCT = new ArrayList<PostVo>();
 
         if (!StringUtils.isEmpty(categoryId)){
             // 存在文章分类筛选条件
-            for (int i = 0; i < voList.size(); i++) {
-                PostVo postVo = voList.get(i);
+            List<PostCategory> postCategoryList = postCategoryService.list(new LambdaQueryWrapper<PostCategory>()
+                    .eq(PostCategory::getCategoryId, categoryId));
+            ArrayList<String> postIdList = new ArrayList<>();
+            for (PostCategory postCategory : postCategoryList) {
+                postIdList.add(postCategory.getPostId());
+            }
 
-                // 获取vo 的分类信息
-                List<Category> categoryList = postVo.getCategoryList();
-                boolean flag = false ;
-                for (Category category : categoryList) {
-                    if (categoryId.equals(category.getId())){
-                        // 查询分类id 存在
-                        flag = true ;
-                        break;
-                    }
-                }
-                if (flag){
-                    // 符合文章分类,添加到列表中
+            for (PostVo postVo : voList) {
+                if (postIdList.contains(postVo.getPostId())){
+                    // 存在分类文章
                     postByCT.add(postVo);
                 }
             }
-
         }
         return postByCT ;
     }

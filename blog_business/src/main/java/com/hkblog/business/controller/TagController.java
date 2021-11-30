@@ -47,6 +47,44 @@ public class TagController {
 
     }
 
+
+    /**
+     * @methodName : 通过id 获取标签的详细信息，前台用户系统展示
+     * @author : HK意境
+     * @date : 2021/11/30 14:38
+     * @description :
+     * @Todo : 通过标签id 查询标签vo 对象
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @GetMapping("/detail/{id}")
+    public ResponseResult<TagVo> getTagDetailById(@PathVariable(name = "id")String tagId){
+
+        TagVo tagVo = tagService.selectTagDetailById(tagId);
+        return new ResponseResult<>(ResultCode.SUCCESS , tagVo) ;
+    }
+
+
+
+    /**
+     * @methodName : 获取全部标签，后台展示
+     * @author : HK意境
+     * @date : 2021/11/30 14:38
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
     @GetMapping("/all")
     public ResponseResult<List<Tag>> all(){
 

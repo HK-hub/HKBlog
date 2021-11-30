@@ -63,4 +63,7 @@ public interface TagService extends IService<Tag> {
      * @Version : 1.0
      */
     List<Tag> findTagListByPostId(String postId);
+
+    // 获取tag 标签详细信息
+    TagVo selectTagDetailById(String tagId);
 }

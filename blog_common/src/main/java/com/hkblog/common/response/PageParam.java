@@ -31,12 +31,23 @@ public class PageParam {
 
     private String tagId ;
 
+    private String year;
+
+    private String month ;
 
     public PageParam(int page, int size){
 
         this.page = page;
         this.pageSize = size ;
 
+    }
+
+    // 处理月份
+    public String getMonth() {
+        /*if (this.month != null && this.month.length() == 1){
+            return "0"+this.month ;
+        }*/
+        return this.month ;
     }
 
 }

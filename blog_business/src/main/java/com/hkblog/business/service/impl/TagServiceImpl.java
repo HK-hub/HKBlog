@@ -101,6 +101,30 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
     }
 
 
+
+    /**
+     * @methodName : 通过标签id 查询标签详细信息，封装vo 对象
+     * @author : HK意境
+     * @date : 2021/11/30 14:42
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @Override
+    public TagVo selectTagDetailById(String tagId) {
+
+        Tag tag = tagMapper.selectById(tagId);
+
+        return new TagVo(tag);
+    }
+
+
 }
 
 
