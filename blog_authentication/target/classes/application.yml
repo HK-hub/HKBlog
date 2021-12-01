@@ -25,20 +25,26 @@ spring:
       config:
         server-addr: 127.0.0.1:8848
 
-
-
-
-# beetlsql
-#beetlsql:
-#  sqlPath: /sql
-#  basePackage: com.hkblog.business.mapper
-#  #mapper接口的后缀
-#  daoSuffix: Mapper
-#  #是否向控制台输出执行的sql，默认为true
-#beetl-beetlsql:
-#  dev: true
-
-
+  mail:
+    # 配置 SMTP 服务器地址
+    host: smtp.qq.com
+    # 发送者邮箱
+    username: 3161880795@qq.com
+    # 发送者昵称
+    nickname: HKBlog-System
+    # 配置密码，注意不是真正的密码，而是刚刚申请到的授权码
+    password: izccligaogjwddhd
+    # 端口号465或587
+    port: 587
+    # 默认的邮件编码为UTF-8
+    default-encoding: UTF-8
+    # 配置SSL 加密工厂
+    properties:
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+        #表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误
+        debug: false
 
 # mybatis-plus
 mybatis-plus:
@@ -50,21 +56,26 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#    password: root
-#    timeout: 3000
-#jwt:
-#  config:
-#    salt: ihrm_system
-#    expireTime: 10800000 # 3小时失效
-
-
-
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
 
 jwt:
   config:
     salt: HK-Blog
     expireTime: 10800000 # 3小时失效
+
+# thymeleaf 模板引擎配置
+thymeleaf:
+  cache: false
+  mode: LEGACYHTML5
+  prefix: classpath:/templates/
+  suffix: .html
+
+
+
+
+
+
+

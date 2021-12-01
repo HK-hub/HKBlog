@@ -14,6 +14,8 @@
         <module>blog_common</module>
         <module>blog_model</module>
         <module>blog_authentication</module>
+        <module>blog_admin</module>
+        <module>blog_search</module>
     </modules>
 
     <properties>
@@ -205,6 +207,13 @@
             <version>7.7.0</version>
         </dependency>
 
+        <!--OK Http-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>javax.xml.bind</groupId>
@@ -225,6 +234,12 @@
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
+        </dependency>
+
+        <!--spring boot 测试环境-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
     </dependencies>

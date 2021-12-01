@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Modified :
  * @Version : 1.0
  */
-@Component
+//@Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
 

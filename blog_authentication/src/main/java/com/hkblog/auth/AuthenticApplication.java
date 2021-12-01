@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @Modified :
  * @Version : 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.hkblog")
 @EnableDiscoveryClient
 public class AuthenticApplication {
 

@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="blog_geteway" />
+        <module name="blog_admin" />
         <module name="blog_generator" />
         <module name="blog_common" />
-        <module name="blog_model" />
         <module name="blog_authentication" />
         <module name="blog_business" />
+        <module name="blog_geteway" />
+        <module name="blog_model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="HKBlog" options="" />
+      <module name="blog_admin" options="-parameters" />
       <module name="blog_authentication" options="-parameters" />
       <module name="blog_business" options="-parameters" />
       <module name="blog_common" options="-parameters" />

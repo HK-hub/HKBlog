@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -86,6 +88,7 @@ public class Post implements Serializable {
      * 文章创建时间
      */
     @TableField(value = "create_time",fill = FieldFill.INSERT)
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date createTime;
 
     /**

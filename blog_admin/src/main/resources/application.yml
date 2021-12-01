@@ -1,0 +1,17 @@
+# spring 应用配置
+# 配置统一请求前缀
+server:
+  servlet:
+    context-path: /admin
+
+spring:
+  application:
+    name: blog-amdin
+
+# nacos 服务端
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+      discovery:
+        server-addr: 127.0.0.1:8848
