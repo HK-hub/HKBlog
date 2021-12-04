@@ -74,6 +74,18 @@
             <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-util</artifactId>
+            <version>0.50.42</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark</artifactId>
+            <version>0.50.42</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

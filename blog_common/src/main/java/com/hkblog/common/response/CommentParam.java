@@ -1,5 +1,6 @@
 package com.hkblog.common.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -19,6 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CommentParam {
 
+    @JsonProperty("")
     private String postId ;
     private String content ;
     private String parentId ;

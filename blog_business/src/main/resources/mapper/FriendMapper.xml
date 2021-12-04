@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hkblog.business.mapper.FriendMapper">
+<mapper namespace="com.hkblog.extend.mapper.FriendMapper">
 
     <resultMap id="BaseResultMap" type="com.hkblog.domain.entity.Friend">
             <id property="id" column="id" jdbcType="BIGINT"/>

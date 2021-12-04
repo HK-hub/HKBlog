@@ -16,6 +16,7 @@
         <module>blog_authentication</module>
         <module>blog_admin</module>
         <module>blog_search</module>
+        <module>blog_extend</module>
     </modules>
 
     <properties>
@@ -214,6 +215,19 @@
             <version>4.8.0</version>
         </dependency>
 
+        <!-- elastic search -->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+
+        <!--bean utils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.xml.bind</groupId>

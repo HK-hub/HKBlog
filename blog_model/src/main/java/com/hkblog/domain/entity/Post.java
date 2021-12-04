@@ -7,74 +7,103 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 博客文章
  * @TableName tb_post
  */
+// 设置elastic search 文档
+/*
+ * type : 字段数据类型
+ * analyzer : 分词器类型
+ * index : 是否索引 默认 :
+ * Keyword : 短语 不进行分词
+ */
+@Document(indexName = "post", type = "post",shards = 3, replicas = 1)
 @TableName(value ="tb_post")
 @Data
 public class Post implements Serializable {
     /**
      * 博客文章id 编号
      */
+    @Id
+    // 文章ID不能作为索引
+    @Field(type = FieldType.Text , index = false)
     @TableId(value = "post_id", type = IdType.ASSIGN_ID)
     private String postId;
 
+    /**
+     * 文章作者id
+     */
+    @Field(type = FieldType.Text,index = false)
     @TableField
     private String userId ;
 
     /**
      * 文章封面
      */
+    @Field(type = FieldType.Text ,index = false)
     @TableField(value = "cover_url")
     private String coverUrl;
 
     /**
      * 文章标题
      */
+    @Field(type = FieldType.Text ,analyzer = "ik_max_word")
     @TableField(value = "title")
     private String title;
 
     /**
      * 文章描述
      */
+    @Field(type = FieldType.Text ,analyzer = "ik_max_word")
     @TableField(value = "description")
     private String description;
 
     /**
      * 文章内容
      */
+    @Field(type = FieldType.Text ,analyzer = "ik_max_word")
     @TableField(value = "content")
     private String content;
 
     /**
      * 文章浏览数量
      */
+    @Field(type = FieldType.Integer ,index = false)
     @TableField(value = "view_num")
     private Integer viewNum;
 
     /**
      * 文章点赞数量
      */
+    @Field(type = FieldType.Integer ,index = false)
     @TableField(value = "like_num")
     private Integer likeNum;
 
     /**
      * 文章收藏数量
      */
+    @Field(type = FieldType.Integer ,index = false)
     @TableField(value = "collection_num")
     private Integer collectionNum;
 
     /**
      * 文章评论数量
      */
+    @Field(type = FieldType.Integer ,index = false)
     @TableField(value = "comment_num")
     private Integer commentNum;
 
     /**
      * 文章状态：1上架,0下架
      */
+    @Field(type = FieldType.Integer ,index = false)
     @TableField(value = "status")
     private Integer status;
 
@@ -82,18 +111,22 @@ public class Post implements Serializable {
     /***
      * 文章是否置顶
      */
+    @Field(type = FieldType.Integer ,index = false)
     private Integer weight ;
 
     /**
      * 文章创建时间
      */
     @TableField(value = "create_time",fill = FieldFill.INSERT)
-    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Field(type = FieldType.Date ,index = true)
     private Date createTime;
 
     /**
      * 文章更新时间
      */
+    @Field(type = FieldType.Date ,index = true)
     @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
@@ -102,6 +135,7 @@ public class Post implements Serializable {
      */
     @TableLogic
     @TableField(value = "deleted")
+    @Field(type = FieldType.Boolean ,index = false)
     private Boolean deleted;
 
     @TableField(exist = false)

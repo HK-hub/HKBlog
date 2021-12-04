@@ -57,17 +57,22 @@ public class CommentController {
      */
     @PostMapping("/create")
     @Transactional
-    public ResponseResult commentPost(@RequestBody CommentParam commentParam){
+    public ResponseResult commentPost(@RequestBody CommentParam commentParam,
+                                        @RequestHeader("Authorization") String token){
+        try{
+            System.out.println("commentParam: " + commentParam.toString());
 
-        System.out.println("commentParam: " + commentParam.toString());
+            Comment comment = commentService.saveComment(commentParam, token);
 
-        Comment comment = commentService.saveComment(commentParam);
+            // 使用多线程，线程池技术去更新文章评论数量
+            postService.updatePostCommentNum(commentParam.getPostId());
 
-        // 使用多线程，线程池技术去更新文章评论数量
-        postService.updatePostCommentNum(commentParam.getPostId());
+            return new ResponseResult(ResultCode.SUCCESS,comment);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
-        return new ResponseResult(ResultCode.SUCCESS,comment);
-
+        return null ;
     }
 
 
@@ -88,13 +93,7 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseResult findCommentByPostId(@PathVariable String id){
 
-        System.out.println("获取文章评论信息： ");
         List<CommentVo> commentVoList = commentService.findPostComments(id);
-
-        for (CommentVo commentVo : commentVoList) {
-            System.out.println(commentVo.toString());
-        }
-
         return new ResponseResult(ResultCode.SUCCESS, commentVoList);
     }
 

@@ -15,6 +15,7 @@ import com.hkblog.common.response.ResultCode;
 import com.hkblog.common.utils.DatetimeUtils;
 import com.hkblog.common.utils.IdWorker;
 import com.hkblog.common.utils.JwtUtils;
+import com.hkblog.common.utils.Md2HtmlUtil;
 import com.hkblog.domain.entity.Category;
 import com.hkblog.domain.entity.Post;
 import com.hkblog.domain.entity.PostCategory;
@@ -461,6 +462,34 @@ public class PostController {
     }
 
 
+
+    /**
+     * @methodName : 返回文章的目录
+     * @author : HK意境
+     * @date : 2021/12/4 19:30
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @GetMapping("/post/directory/{id}")
+    public ResponseResult getPostDirectory( @PathVariable String id){
+
+        Post byId = postService.getById(id);
+        if (byId != null) {
+            // 文章不为空
+            if (!StringUtils.isEmpty(byId.getContent())){
+                StringBuilder convert = Md2HtmlUtil.convert(byId.getContent());
+                return new ResponseResult(ResultCode.SUCCESS ,convert);
+            }
+        }
+        return ResponseResult.SUCCESS();
+    }
 
 
 

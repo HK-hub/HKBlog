@@ -60,5 +60,5 @@ public interface CommentService extends IService<Comment> {
      * @Modified :
      * @Version : 1.0
      */
-    Comment saveComment(CommentParam commentParam);
+    Comment saveComment(CommentParam commentParam, String token);
 }

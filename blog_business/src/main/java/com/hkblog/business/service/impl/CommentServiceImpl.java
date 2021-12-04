@@ -1,11 +1,13 @@
 package com.hkblog.business.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hkblog.business.mapper.PostMapper;
 import com.hkblog.common.response.CommentParam;
 import com.hkblog.common.response.ResponseResult;
 import com.hkblog.common.utils.IdWorker;
+import com.hkblog.common.utils.JwtUtils;
 import com.hkblog.domain.entity.Comment;
 import com.hkblog.business.service.CommentService;
 import com.hkblog.business.mapper.CommentMapper;
@@ -13,7 +15,10 @@ import com.hkblog.domain.entity.User;
 import com.hkblog.domain.thread.UserThreadLocal;
 import com.hkblog.domain.vo.CommentVo;
 import com.hkblog.domain.vo.UserVo;
+import io.jsonwebtoken.Claims;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -36,7 +41,11 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Autowired
     private IdWorker idWorker ;
     @Autowired
+    private JwtUtils jwtUtils ;
+    @Autowired
     private ThreadService threadService;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate ;
     @Autowired
     private PostMapper postMapper ;
 
@@ -111,10 +120,14 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      */
     @Override
     @Transactional
-    public Comment saveComment(CommentParam commentParam) {
+    public Comment saveComment(CommentParam commentParam ,String token) {
 
         // 获取当前线程池中的用户
-        User currentUser = UserThreadLocal.get();
+
+        // 获取redis 缓存
+        String userJsonString = redisTemplate.opsForValue().get("TOKEN_" + token);
+        User currentUser = JSON.parseObject(userJsonString, User.class);
+        System.out.println("user : " + currentUser.toString());
         Comment comment = new Comment();
 
         // 设置属性

@@ -1,5 +1,6 @@
 package com.hkblog.auth;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -15,6 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @Version : 1.0
  */
 @SpringBootApplication(scanBasePackages = "com.hkblog")
+@MapperScan("com.hkblog.auth.mapper")
 @EnableDiscoveryClient
 public class AuthenticApplication {
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
+ * @author HK意境
  * @Entity com.hkblog.domain.entity.VisitLog
  */
 @Mapper
