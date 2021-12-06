@@ -1,0 +1,16 @@
+server:
+  port: 8085
+
+#spring配置
+spring:
+  #1.应用配置
+  application:
+    name: blog-search #指定服务名
+  #2.数据库连接池
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hk_blog?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
