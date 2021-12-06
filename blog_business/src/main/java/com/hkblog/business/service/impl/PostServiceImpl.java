@@ -19,6 +19,7 @@ import com.hkblog.domain.entity.User;
 import com.hkblog.domain.vo.PostArchiveVo;
 import com.hkblog.domain.vo.PostVo;
 
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -70,6 +71,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<PostVo> listPost(PageParam pageParam) {
 
@@ -126,6 +128,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<PostVo> findByTag(String tagName, @Nullable PageParam pageParam) {
 
@@ -166,6 +169,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<Post> getHotPosts(Integer num, Map<String, String> orderCondition) {
 
@@ -201,6 +205,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<Post> getNewPosts(Integer num, Map orderCondition) {
         // 构造查询 wrapper
@@ -236,6 +241,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Version : 1.0
      */
     @Override
+    @Trace
     public List<PostArchiveVo> listArchives() {
         List<PostArchiveVo> postArchiveVos = postMapper.selectArchiveList();
         return postArchiveVos ;
@@ -258,6 +264,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Version : 1.0
      */
     @Override
+    @Trace
     public PostVo getPostDetailVoById(String postId) {
 
         // 查询文章
@@ -299,6 +306,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Version : 1.0
      */
     @Override
+    @Trace
     public User getPostAuthorById(String postId) {
         System.out.println("postId: "+ postId);
         String userId = postMapper.selectById(postId).getUserId();
@@ -323,6 +331,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Version : 1.0
      */
     @Override
+    @Trace
     public Boolean updatePostCommentNum(String postId) {
 
         // 更新评论数量
@@ -349,6 +358,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Version : 1.0
      */
     @Transactional
+    @Trace
     @Override
     public Post saveNewPost(PostParam postParam,String authorId) {
 
@@ -391,12 +401,39 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<PostVo> findAllPostByCategory(String categoryId) {
 
         List<Post> postList = postMapper.selectListByCategory(categoryId);
 
         return this.castPostToPostVoBatch(postList,true ,true,true);
+    }
+
+
+
+    /**
+     * @methodName : 更新文章的点赞数量
+     * @author : HK意境
+     * @date : 2021/12/5 11:42
+     * @description :
+     * @Todo : 使用线程池技术更新点赞数量
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @Trace
+    @Override
+    public Boolean updatePostLikeNum(String id) {
+
+        Post post = postMapper.selectById(id);
+        Boolean aBoolean = threadService.updatePostLikeNum(postMapper, post);
+
+        return aBoolean ;
     }
 
 
@@ -414,6 +451,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     public PostVo castPostToPostVo(Post record){
 
         // 查询文章标签
@@ -488,6 +526,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     public User getPostAuthor(Post post){
 
         User user = userMapper.selectOne(new LambdaQueryWrapper<User>().eq(User::getUserId, post.getUserId()));

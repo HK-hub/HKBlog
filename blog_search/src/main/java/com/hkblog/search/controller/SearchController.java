@@ -99,7 +99,7 @@ public class SearchController {
                             //new HighlightBuilder.Field("content").preTags("<em style='color:red'>").postTags("</em>"))
                     // 排序
                     .withSort(SortBuilders.scoreSort())
-                    .withSort(SortBuilders.fieldSort("createTime"))
+                    //.withSort(SortBuilders.fieldSort("createTime"))
                     .build();
 
             // 高亮数据字段

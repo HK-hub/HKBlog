@@ -36,6 +36,12 @@ public class ResponseResult<T extends Object> {
     //返回数据
     private T data;
 
+    // 静态放回对象
+    public static ResponseResult SuccessResponse = new ResponseResult(ResultCode.SUCCESS,"ok");
+    public static ResponseResult FailResponse = new ResponseResult(ResultCode.FAIL,"failed");
+    public static ResponseResult ErrorResponse = new ResponseResult(ResultCode.REMOTE_INTERFACE_ERROR,"exception");
+
+
     public ResponseResult(ResultCode code) {
         this.success = code.success();
         this.code = code.code();

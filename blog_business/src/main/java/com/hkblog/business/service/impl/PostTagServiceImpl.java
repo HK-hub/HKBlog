@@ -8,6 +8,7 @@ import com.hkblog.business.service.PostTagService;
 import com.hkblog.business.mapper.PostTagMapper;
 import com.hkblog.domain.entity.Tag;
 import com.hkblog.domain.vo.TagVo;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,7 @@ public class PostTagServiceImpl extends ServiceImpl<PostTagMapper, PostTag>
      */
     @Transactional
     @Override
+    @Trace
     public Boolean savePostTagList(PostParam postParam) {
 
         // 获取标签列表

@@ -6,6 +6,7 @@ import com.hkblog.domain.entity.PostCategory;
 import com.hkblog.business.service.PostCategoryService;
 import com.hkblog.business.mapper.PostCategoryMapper;
 import com.hkblog.domain.vo.CategoryVo;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class PostCategoryServiceImpl extends ServiceImpl<PostCategoryMapper, Pos
 
     @Override
     @Transactional
+    @Trace
     public Boolean savePostCategory(PostParam postParam) {
 
         // 获取文章id

@@ -6,6 +6,7 @@ import com.hkblog.domain.entity.Tag;
 import com.hkblog.business.service.TagService;
 import com.hkblog.business.mapper.TagMapper;
 import com.hkblog.domain.vo.TagVo;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<TagVo> selectByTags(List<Tag> tags) {
 
@@ -69,6 +71,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<Tag> hotsTag(Integer num) {
 
@@ -94,6 +97,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<Tag> findTagListByPostId(String postId) {
         List<Tag> tagList = tagMapper.selectListByPostId(postId);
@@ -116,6 +120,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public TagVo selectTagDetailById(String tagId) {
 

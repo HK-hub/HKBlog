@@ -1,5 +1,10 @@
 package com.hkblog.extend.controller;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  * @author : HK意境
  * @ClassName : WebSiteSettingController
@@ -10,5 +15,18 @@ package com.hkblog.extend.controller;
  * @Modified :
  * @Version : 1.0
  */
+@CrossOrigin
+@RefreshScope
+@RestController
+@RequestMapping("/website")
 public class WebSiteSettingController {
+
+
+
+
+
+
+
+
+
 }

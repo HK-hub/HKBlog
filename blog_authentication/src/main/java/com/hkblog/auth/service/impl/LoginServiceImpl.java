@@ -16,6 +16,7 @@ import com.hkblog.common.utils.MailUtil;
 import com.hkblog.domain.entity.User;
 import me.zhyd.oauth.model.AuthResponse;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.beetl.sql.core.query.LambdaQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -66,6 +67,7 @@ public class LoginServiceImpl implements LoginService {
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public String emailLogin(String email) {
 
@@ -96,6 +98,7 @@ public class LoginServiceImpl implements LoginService {
 
 
     // 发送指定类型的验证码
+    @Trace
     @Override
     public boolean sendCode(String email, String type) {
 
@@ -118,6 +121,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
+    @Trace
     @Override
     public String accountLogin(LoginParam loginParam) {
 
@@ -171,6 +175,7 @@ public class LoginServiceImpl implements LoginService {
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public boolean logout(String token) {
 
@@ -201,6 +206,7 @@ public class LoginServiceImpl implements LoginService {
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     @Transactional
     public ResponseResult accountRegister(RegisterParam registerParam) {
@@ -276,6 +282,7 @@ public class LoginServiceImpl implements LoginService {
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public String oAuthLogin(AuthResponse authResponse) {
 

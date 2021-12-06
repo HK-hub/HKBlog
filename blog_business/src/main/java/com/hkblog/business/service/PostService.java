@@ -66,4 +66,8 @@ public interface PostService extends IService<Post> {
 
     // 根据分类id 查找全部文章
     List<PostVo> findAllPostByCategory(String categoryId);
+
+
+    // 跟新文章点赞数量
+    Boolean updatePostLikeNum(String id);
 }

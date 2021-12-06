@@ -7,6 +7,7 @@ import com.hkblog.common.utils.IdWorker;
 import com.hkblog.common.utils.IpUtils;
 import com.hkblog.common.utils.SystemUtils;
 import com.hkblog.domain.entity.VisitLog;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,7 +42,8 @@ public class VisitLogServiceImpl extends ServiceImpl<VisitLogMapper, VisitLog>
      * @Modified :
      * @Version : 1.0
      */
-    @Override   
+    @Trace
+    @Override
     public void saveVisitorInfo(HttpServletRequest request, HttpServletResponse response) {
 
         VisitLog visitLog = new VisitLog();

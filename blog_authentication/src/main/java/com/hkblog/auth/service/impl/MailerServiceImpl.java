@@ -2,6 +2,7 @@ package com.hkblog.auth.service.impl;
 
 import com.hkblog.auth.service.MailService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -41,6 +42,7 @@ public class MailerServiceImpl implements MailService {
     @Autowired(required = false)
     private JavaMailSender mailSender;
 
+    @Trace
     @Override
     public boolean send(String to, String subject, String code) {
 

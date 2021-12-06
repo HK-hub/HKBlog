@@ -8,4 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserLikeService extends IService<UserLike> {
 
+
+    // 删除用户喜欢的文章
+    Boolean deleteUserLike(String id, String token);
 }

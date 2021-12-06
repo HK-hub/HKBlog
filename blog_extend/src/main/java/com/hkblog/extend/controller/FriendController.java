@@ -1,16 +1,13 @@
 package com.hkblog.extend.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.hkblog.common.response.ResponseResult;
 import com.hkblog.common.response.ResultCode;
 import com.hkblog.common.utils.IdWorker;
 import com.hkblog.domain.entity.Friend;
-import com.hkblog.extend.service.FriendService;
 import com.hkblog.extend.service.impl.FriendServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -79,14 +76,38 @@ public class FriendController {
      * @Version : 1.0
      */
     @GetMapping("/list")
-    public ResponseResult getFriendList(@RequestParam(name = "num", required = false , defaultValue = "7")Integer num){
+    public ResponseResult getFriendList(@RequestParam(name = "num", required = false , defaultValue = "7")Integer num) {
 
         List<Friend> list = friendService.list(new LambdaQueryWrapper<Friend>()
                 .orderByDesc(Friend::getViews)
                 .last("limit " + num));
 
-        return new ResponseResult(ResultCode.SUCCESS , list);
+        return new ResponseResult(ResultCode.SUCCESS, list);
+
     }
+
+
+    /**
+     * @methodName : 修改友站信息
+     * @author : HK意境
+     * @date : 2021/12/5 11:32
+     * @description :
+     * @Todo :
+     * @params :
+         * @param : null
+     * @return : null
+     * @throws:
+     * @Bug :
+     * @Modified :
+     * @Version : 1.0
+     */
+    @PutMapping("/{id}")
+    public ResponseResult updateFriendById(@PathVariable(name = "id")String id,
+                                           @RequestBody Friend friend){
+        boolean b = friendService.updateById(friend);
+        return new ResponseResult(ResultCode.SUCCESS, b) ;
+    }
+
 
 
     // 删除友站

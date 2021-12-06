@@ -16,6 +16,7 @@ import com.hkblog.domain.thread.UserThreadLocal;
 import com.hkblog.domain.vo.CommentVo;
 import com.hkblog.domain.vo.UserVo;
 import io.jsonwebtoken.Claims;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -63,6 +64,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public ResponseResult commentPost(Comment comment, String postId) {
         return null;
@@ -83,6 +85,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<CommentVo> findPostComments(String postId) {
 
@@ -118,6 +121,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     @Transactional
     public Comment saveComment(CommentParam commentParam ,String token) {
@@ -199,6 +203,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     private CommentVo commentToVo(Comment comment) {
 
         CommentVo commentVo = new CommentVo();
@@ -251,6 +256,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     private List<CommentVo> findCommentsByParentId(String parentId) {
 
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();

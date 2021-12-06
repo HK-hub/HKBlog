@@ -6,6 +6,7 @@ import com.hkblog.domain.entity.Category;
 import com.hkblog.business.service.CategoryService;
 import com.hkblog.business.mapper.CategoryMapper;
 import com.hkblog.domain.vo.CategoryVo;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<Category> findCategoryListByPostId(String postId) {
 
@@ -62,6 +64,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public List<CategoryVo> findAllCategoryVo() {
 
@@ -89,6 +92,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public Boolean saveCategoryVo(CategoryVo categoryVo) {
 

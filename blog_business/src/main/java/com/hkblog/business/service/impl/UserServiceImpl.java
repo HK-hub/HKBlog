@@ -11,6 +11,7 @@ import com.hkblog.business.mapper.UserMapper;
 import com.hkblog.domain.vo.UserVo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.skywalking.apm.toolkit.trace.Trace;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public User findUserByAccountPassword(String account, String password) {
 
@@ -59,6 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return user;
     }
 
+    @Trace
     @Override
     public User findUserByToken(String token) {
 
@@ -103,6 +106,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public UserVo getUserVo(String userId) {
 
@@ -126,6 +130,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public User findUserByPostId(String postId) {
         User author = postService.getPostAuthorById(postId);
@@ -147,6 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @Modified :
      * @Version : 1.0
      */
+    @Trace
     @Override
     public boolean save(User entity) {
 
